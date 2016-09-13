@@ -1,0 +1,9 @@
+.ui-datepicker-prev.ui-corner-all{
+    background: #9ECBDC;
+}
+.ui-datepicker-next.ui-corner-all{
+    background: #9ECBDC;
+}
+.ui-datepicker-today .ui-state-default.ui-state-highlight{
+    color: #000000;
+}

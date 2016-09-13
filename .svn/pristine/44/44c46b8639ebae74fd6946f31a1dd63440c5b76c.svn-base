@@ -1,0 +1,65 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package core.controller;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import project.vo.Account;
+
+/**
+ *
+ * @author DA CUOI
+ */
+@ManagedBean(name = "loginController")
+@SessionScoped
+public class LoginController {
+    private static final String REDIRECT_TO_HOME = "/ptpmpt/home.xhtml?faces-redirect=true";
+    private static final String REDIRECT_TO_LOGIN = "/login.xhtml?faces-redirect=true";
+    private static final String TO_LOGIN = "/login.xhtml";
+    
+    private Account account;
+    private boolean loggedIn;
+    
+    public LoginController(){
+        account = new Account();
+    }
+    
+    public String doLogin(){
+        if(account.getUsername() != "" && account.getPassword() != ""){
+            loggedIn = true;
+             FacesContext context = FacesContext.getCurrentInstance();
+             context.getExternalContext().getSessionMap().put("user", account.getUsername());
+            return REDIRECT_TO_HOME;
+        }
+        loggedIn = false;
+        return TO_LOGIN;
+    }
+    
+    public String doLogout(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().remove("user");
+        loggedIn = false;
+        return REDIRECT_TO_LOGIN;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    } 
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+}
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="mydb"/>
+  <table-filter match-name="lesson"/>
+  <table-filter match-name="manage"/>
+  <table-filter match-name="manage_info"/>
+  <table-filter match-name="account_info"/>
+  <table-filter match-name="file"/>
+  <table-filter match-name="course_account"/>
+  <table-filter match-name="comment"/>
+  <table-filter match-name="course"/>
+  <table-filter match-name="account"/>
+</hibernate-reverse-engineering>

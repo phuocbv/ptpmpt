@@ -1,0 +1,75 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package core.controller;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
+/**
+ *
+ * @author DA CUOI
+ */
+@ManagedBean(name = "loginController")
+@SessionScoped
+public class LoginController {
+    private static final String REDIRECT_TO_HOME = "/ptpmpt/home.xhtml?faces-redirect=true";
+    private static final String REDIRECT_TO_LOGIN = "/login.xhtml?faces-redirect=true";
+    private static final String TO_LOGIN = "/login.xhtml";
+    
+    private String username;
+    private String password;
+
+    private boolean loggedIn;
+    
+    public LoginController(){
+        
+    }
+    
+    public String doLogin(){
+        if(username != "" && password != ""){
+            loggedIn = true;
+            return REDIRECT_TO_HOME;
+        }
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().put("user", username);
+        
+        loggedIn = false;
+        return TO_LOGIN;
+    }
+    
+    public String doLogout(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().remove("user");
+        loggedIn = false;
+        return REDIRECT_TO_LOGIN;
+    }
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }    
+}
+

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+   <h:body>
+       
+      <ui:composition template="../template/template.xhtml">
+          <ui:define name="title">
+              Home
+          </ui:define>
+          
+          <ui:define name="header">
+              header
+              <p:outputLabel value="#{loginController.username}"/>
+          </ui:define>
+          
+          <ui:define name="footer">
+              footer
+          </ui:define>
+          
+         <ui:define name="content">	
+             <h:form id="form">
+                 <p:calendar mask="99/99/9999" pattern="dd/MM/yyyy"/>
+                 <p:commandButton value="Logout" action="#{loginController.doLogout()}"/>
+                 <p:inputText/>
+                <p:dataGrid var="car" value="#{dataGridView.cars}" columns="3" layout="grid"
+                 rows="12" paginator="true" id="cars"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="6,12,16">
+
+                     <f:facet name="header">
+                         Cars for Sale
+                     </f:facet>
+
+                     <p:panel header="#{car.id}" style="text-align:center">
+                         <h:panelGrid columns="1" style="width:100%">
+                             <p:graphicImage name="demo/images/car/#{car.brand}.gif"/> 
+
+                             <h:outputText value="#{car.year}" />
+
+                             <p:commandLink update=":form:carDetail" oncomplete="PF('carDialog').show()" title="View Detail">
+                                 <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
+                                 <f:setPropertyActionListener value="#{car}" target="#{dataGridView.selectedCar}" />
+                             </p:commandLink>
+                         </h:panelGrid>
+                     </p:panel>
+
+             </p:dataGrid>
+                 <div style="display: block; height: 5px"></div>
+                 <p:panel >
+                     <p:commandButton value="ass"/>
+                 </p:panel>
+                 <div style="display: block; height: 5px"></div>
+                 <p:fieldset legend="dss">
+                     <p:commandButton value="dsds"/>
+                 </p:fieldset>
+             </h:form>
+         </ui:define>
+      </ui:composition>
+   </h:body>
+</html>	

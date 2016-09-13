@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+   <h:body>
+       
+      <ui:composition template="../template/template.xhtml">
+          <ui:define name="title">
+              Home
+          </ui:define>
+          
+          <ui:define name="header">
+              header
+              <p:outputLabel value="#{homeController.username}"/>
+          </ui:define>
+          
+          <ui:define name="footer">
+              footer
+          </ui:define>
+          
+         <ui:define name="content">	
+             <h:form id="form">
+                 
+                 <p:panelGrid styleClass="Wid100" columns="1">
+                     <p:row>
+                         <p:column styleClass="Wid100">
+                             <p:commandButton styleClass="Right" value="Logout" action="#{loginController.doLogout()}"/>
+                         </p:column>
+                     </p:row>
+                 </p:panelGrid>
+                
+                 <p:dataGrid var="course" value="#{homeController.listCourse}" columns="3" layout="grid"
+                 rows="12" paginator="true" id="cars"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="6,12,16" paginatorPosition="bottom">
+
+                     <f:facet name="header">
+                         Các khóa học của bạn
+                     </f:facet>
+
+                     <p:panel header="#{course.courceName}" style="text-align:center">
+                         <h:panelGrid columns="1" style="width:100%">
+                             <p:graphicImage value="../#{course.courceImage}"/> 
+
+                             <h:outputText value="#{course.courceName}" />
+
+                             <p:outputLabel value="Ngày tạo #{course.courceCreateDate}"/>
+                         </h:panelGrid>
+                     </p:panel>
+
+             </p:dataGrid>
+                 <div style="display: block; height: 5px"></div>
+                 <p:panel >
+                     <p:commandButton value="ass"/>
+                 </p:panel>
+                 <div style="display: block; height: 5px"></div>
+                 <p:fieldset legend="dss">
+                     <p:commandButton value="dsds"/>
+                 </p:fieldset>
+             </h:form>
+         </ui:define>
+      </ui:composition>
+   </h:body>
+</html>	

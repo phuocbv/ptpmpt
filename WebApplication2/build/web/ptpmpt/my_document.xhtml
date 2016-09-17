@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+
+        <ui:composition template="../template/template.xhtml">
+            <ui:define name="title">
+                My Document
+            </ui:define>
+
+
+            <ui:define name="content">
+                <p:growl id="growl" showDetail="true"></p:growl>
+
+                <p:panelGrid styleClass="Wid100">
+                    <p:row>
+                        <p:column styleClass="Wid100 TexCenter">
+                            <p:outputLabel value="Thông tin chi tiết khóa học"></p:outputLabel>
+                        </p:column> 
+                    </p:row>
+                </p:panelGrid>
+
+                <div class="EmptyBox20"></div>
+                <h:form id="form">
+
+                    <p:dataScroller value="#{demoController.list}" var="it" chunkSize="10" mode="inline" scrollHeight="500">
+                        <f:facet name="header">
+                            Scroll Down to Load More Cars
+                        </f:facet>
+
+                        <h:panelGrid columns="2" style="width:100%">
+                            
+
+                            <p:outputPanel>
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputText value="Id:" />
+                                    <h:outputText value="#{it.name}" style="font-weight: bold"/>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </h:panelGrid>
+                    </p:dataScroller>
+
+                </h:form>
+
+
+                <h:form id="formDialog">
+                    <p:dialog id="dialogAdd" widgetVar="dialogAdd" resizable="false" width="500">
+                        <f:facet name="header">
+                            Thêm
+                        </f:facet>
+
+                        <f:facet name="footer">
+                            <p:outputPanel styleClass="Wid100 TexRight">
+                                <p:commandButton value="Thêm">
+
+                                </p:commandButton>
+                            </p:outputPanel>
+                        </f:facet>
+                    </p:dialog>
+                </h:form>
+
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>

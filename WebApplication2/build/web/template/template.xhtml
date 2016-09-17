@@ -15,30 +15,31 @@
                     </ui:insert>
                 </title>
             </f:facet>
-           <h:outputStylesheet library="css" name="theme_5.css"  />
+           <h:outputStylesheet library="css" name="theme_3.css"  />
+          
            <h:outputStylesheet library="css" name="style.css"/>
         </h:head>
 
         <h:body>
             <p:layout fullPage="true">
-                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                <p:layoutUnit position="north" size="60" resizable="true" closable="true" collapsible="true">
                     <ui:insert name="header">
-                        
+                        <ui:include  src="header.xhtml"/>
                     </ui:insert>
                 </p:layoutUnit>
 
-                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                <p:layoutUnit position="south" size="60" closable="true" collapsible="true">
                     <ui:insert name="footer">
-                        
+                        <ui:include src="footer.xhtml"/>
                     </ui:insert>
                 </p:layoutUnit>
 
                 <p:layoutUnit position="west" size="250" collapsible="true">
                     <p:menu style="width: 95%">
-                        <p:submenu label="Resources">
-                            <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
-                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
+                        <p:submenu label="Trang chủ">
+                            <p:menuitem value="Khóa học của bạn" url="/ptpmpt/home.xhtml" />
+                            <p:menuitem value="Khóa học được chia sẻ" url="http://www.primefaces.org/documentation.html" />
+                            <p:menuitem value="Tài liệu được chia sẻ" url="http://forum.primefaces.org/" />
                             <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
                         </p:submenu>
                     </p:menu>

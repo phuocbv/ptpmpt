@@ -1,5 +1,3 @@
-
-
 /*
  * jQuery UI CSS Framework 1.8.9
  *
@@ -18,7 +16,7 @@
 .ui-widget { font-family: "Times New Roman", Times, serif; font-size: 1em; }
 .ui-widget .ui-widget { font-size: 1em; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: "Times New Roman", Times, serif; font-size: 1em; }
-.ui-widget-content { border: 1px solid #dddddd; background: #f2f5f7 url(images/ui-bg_highlight-hard_100_f2f5f7_1x100.png) 50% top repeat-x; color: #362b36; }
+.ui-widget-content { border: 1px solid #dddddd; background: #f2f5f7 url(resources/images/ui-bg_highlight-hard_100_f2f5f7_1x100.png) 50% top repeat-x; color: #362b36; }
 .ui-widget-content a { color: #362b36; }
 .ui-widget-header { border: 1px solid #aed0ea; background: #deedf7 url(images/ui-bg_highlight-soft_100_deedf7_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
 .ui-widget-header a { color: #222222; }
@@ -49,7 +47,7 @@
 
 /* states and images */
 .ui-icon { width: 16px; height: 16px; background-image: url(images/ui-icons_72a7cf_256x240.png); }
-.ui-widget-content .ui-icon {background-image: url(images/ui-icons_72a7cf_256x240.png); }
+/*.ui-widget-content .ui-icon {background-image: url(../images/ui-icons_72a7cf_256x240.png); }*/
 .ui-widget-header .ui-icon {background-image: url(images/ui-icons_72a7cf_256x240.png); }
 .ui-state-default .ui-icon { background-image: url(images/ui-icons_3d80b3_256x240.png); }
 .ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(images/ui-icons_2694e8_256x240.png); }
@@ -286,6 +284,23 @@ p-togglebutton.ng-dirty.ng-invalid .ui-button {
 
 /*panelGrid none border*/
 .ui-panelgrid.ui-widget{ border: hidden;} 
+.ui-panelgrid .ui-panelgrid-cell{border: hidden !important;}
+
+
+.ui-inputfield.ui-widget.ui-state-default.ui-corner-all.hasDatepicker{
+    width: 100%;
+    background: #FFF;
+       
+}
+.ui-dialog-titlebar-icon.ui-dialog-titlebar-close.ui-corner-all{ background: #9ECBDC; margin-top: 4px;}
+
+
+/*datagrid*/
+.ui-datagrid-data .ui-datagrid-row .ui-datagrid-column{width: 33%;}
+
+.TexRight{text-align: right;}
+.TexLeft{text-align: left;}
+.TexCenter{text-align: center;}
 
 .Left{float: left;}
 .Right{ float: right;}
@@ -332,5 +347,6 @@ p-togglebutton.ng-dirty.ng-invalid .ui-button {
 .EmptyBox5{ display: block; height: 5px}
 .EmptyBox10{display: block; height: 10px}
 .EmptyBox15{display: block; height: 15px}
-
-
+.EmptyBox20{display: block; height: 20px}
+.EmptyBox25{display: block; height: 25px}
+.EmptyBox30{display: block; height: 30px}

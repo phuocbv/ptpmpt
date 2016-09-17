@@ -18,7 +18,7 @@
 .ui-widget { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-size: 1em; }
 .ui-widget .ui-widget { font-size: 1em; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-size: 1em; }
-.ui-widget-content { border: 1px solid #dddddd; background: #ffffff; color: #333333; }
+.ui-widget-content { border: 1px solid #dddddd; background: #f2f5f7; color: #333333; }
 .ui-widget-content a { color: #333333; }
 .ui-widget-header { border: 1px solid #eeeeee; background: #f5f5f5; color: #333333; font-weight: bold; }
 .ui-widget-header a { color: #333333; }
@@ -143,7 +143,7 @@
 
 /* states and images */
 .ui-icon { width: 16px; height: 16px; background-image: url(images/ui-icons_333333_256x240.png); }
-.ui-widget-content .ui-icon {background-image: url(images/ui-icons_333333_256x240.png); }
+/*.ui-widget-content .ui-icon {background-image: url(images/ui-icons_333333_256x240.png); }*/
 .ui-widget-header .ui-icon {background-image: url(images/ui-icons_333333_256x240.png); }
 .ui-state-default .ui-icon { background-image: url(images/ui-icons_333333_256x240.png); }
 .ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(images/ui-icons_333333_256x240.png); }
@@ -952,7 +952,63 @@ p-togglebutton.ng-dirty.ng-invalid .ui-button {
     border-bottom-color: #eed3d7;
 }
 
+/*panelGrid none border*/
+.ui-panelgrid.ui-widget{ border: hidden;} 
+.ui-panelgrid .ui-panelgrid-cell{border: hidden !important;}
 
+/*dialog*/
+.ui-dialog.ui-widget-content .ui-dialog-titlebar{ background: #D6E8F3;}
+.ui-dialog.ui-widget-content .ui-dialog-content{background: #F2F5F7;}
+
+.ui-inputfield.ui-widget.ui-state-default.ui-corner-all.hasDatepicker{
+    width: 100%;
+    background: #FFF;
+       
+}
+.ui-dialog-titlebar-icon.ui-dialog-titlebar-close.ui-corner-all{ background: #9ECBDC; margin-top: 4px;}
+
+
+/*datagrid*/
+.ui-datagrid-data .ui-datagrid-row .ui-datagrid-column{width: 33%;}
+
+.TexRight{text-align: right;}
+.TexLeft{text-align: left;}
+.TexCenter{text-align: center;}
+
+.Left{float: left;}
+.Right{ float: right;}
+
+.Relative{ position: relative}
+
+.NeoL5{ left: 5px; position: absolute;}
+.NeoL10{ left: 10px; position: absolute;}
+.NeoL15{ left: 15px; position: absolute;}
+.NeoL20{ left: 20px; position: absolute;}
+.NeoL25{ left: 25px; position: absolute;}
+.NeoL30{ left: 30px; position: absolute;}
+.NeoL35{ left: 35px; position: absolute;}
+.NeoL40{ left: 40px; position: absolute;}
+.NeoL45{ left: 45px; position: absolute;}
+
+
+.NeoR5{ right: 5px; position: absolute;}
+
+.MarL5{ margin-left: 5px }
+.MarL10{ margin-left: 10px }
+.MarL15{ margin-left: 15px }
+.MarL20{ margin-left: 20px }
+.MarL25{ margin-left: 25px }
+.MarL30{ margin-left: 30px }
+
+
+.MarR5{ margin-right: 5px }
+.MarR10{ margin-right: 10px }
+.MarR15{ margin-right: 15px }
+.MarR20{ margin-right: 20px }
+.MarR25{ margin-right: 25px }
+.MarR30{ margin-right: 30px }
+
+/*Width*/
 .Wid5{width: 5%}
 .Wid10{width: 10%}
 .Wid15{width: 15%}
@@ -979,3 +1035,7 @@ p-togglebutton.ng-dirty.ng-invalid .ui-button {
 .EmptyBox5{ display: block; height: 5px}
 .EmptyBox10{display: block; height: 10px}
 .EmptyBox15{display: block; height: 15px}
+.EmptyBox20{display: block; height: 20px}
+.EmptyBox25{display: block; height: 25px}
+.EmptyBox30{display: block; height: 30px}
+

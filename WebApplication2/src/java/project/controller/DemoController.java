@@ -5,6 +5,7 @@
  */
 package project.controller;
 
+import java.util.ArrayList;
 import project.dao.HibernateUtil;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +26,16 @@ import org.hibernate.cfg.Configuration;
 public class DemoController {
     private String str;
     static SessionFactory factory;
+    List<item> list = new ArrayList<>();
+    
+    public DemoController(){
+        for(int i= 0 ;i< 100; i++){
+            item it = new item();
+            it.setName("So: " + i);
+            list.add(it);
+        }
+    }
+    
     public void abc(){
          //factory = new Configuration().configure().buildSessionFactory();
         
@@ -48,6 +59,16 @@ public class DemoController {
      
     }
 
+    public List<item> getList() {
+        return list;
+    }
+
+    public void setList(List<item> list) {
+        this.list = list;
+    }
+    
+    
+   
     public String getStr() {
         return str;
     }
@@ -56,5 +77,17 @@ public class DemoController {
         this.str = str;
     }
     
+    
+}
+class item{
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     
 }

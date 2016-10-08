@@ -1,0 +1,355 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package project.controllerAdmin;
+
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.TreeNode;
+import org.primefaces.model.UploadedFile;
+import project.DO.Account;
+import project.DO.Course;
+import project.DO.Document;
+import project.DO.Index;
+import project.DO.ShareCourse;
+import project.config.CONFIG;
+import project.dao.AccountDAO;
+import project.dao.CourseDAO;
+import project.dao.FileDAO;
+import project.dao.IndexDAO;
+import project.dao.ShareCourseDAO;
+import project.util.FileUtil;
+import project.util.Tree;
+import project.util.Util;
+
+/**
+ *
+ * @author DA CUOI
+ */
+@ManagedBean(name = "courseDetailControllerAdmin")
+@ViewScoped
+public class CourseDetailControllerAdmin {
+
+    public int courseIdCurrent;
+    private Account account;
+    private Course courseCurrent;
+    private ShareCourse shareCourse;
+    private TreeNode root;
+    private TreeNode selectNode;
+    private Tree treeUtil;
+    private boolean displayChoseFile;
+    private Index index;
+    private Part file;
+    private String uploadFileName;
+    private String urlFile;
+    private String typeFile = "";
+    private List<String> listIdAccountByAdminCreate;
+    private List<String> listIdAccountAttendedNotShared;
+    private List<Account> listAccountAttendedNotShared;
+    private List<Account> listAccountManageByAdmin;
+
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+    public CourseDetailControllerAdmin() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        account = (Account) context.getExternalContext().getSessionMap().get(CONFIG.SESSION_NAME_OF_ADMIN);
+
+        treeUtil = new Tree();
+        urlFile = "/file/demo.pdf";
+
+        listIdAccountByAdminCreate = new ArrayList<>();
+        listIdAccountAttendedNotShared = new ArrayList<>();
+    }
+
+    public int getCourseIdCurrent() {
+        return courseIdCurrent;
+    }
+
+    public void setCourseIdCurrent(int courseIdCurrent) {
+        this.courseIdCurrent = courseIdCurrent;
+        if (courseIdCurrent > 0 && account != null) {
+            System.err.print(courseIdCurrent);
+            courseCurrent = CourseDAO.getCourseById(courseIdCurrent);
+            shareCourse = ShareCourseDAO.getShareCouseByIdAccountAndIdCourseAdmin(account.getIdaccount(), courseIdCurrent);
+            resetTree();
+        }
+    }
+
+    public void uploadFile(FileUploadEvent event) {
+        if (file != null) {
+            FileUtil fileUtil = new FileUtil();
+            try {
+                fileUtil.uploadFile(file);
+            } catch (IOException ex) {
+                Logger.getLogger(CourseDetailControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void addIndex() {
+        if (index != null) {
+            Index select = (Index) selectNode.getData();
+            index.setTitle(index.getName());
+            index.setContent("content");
+            index.setCreateDate(format.format(new Date()));
+            index.setIdShareCourse(shareCourse.getIdshareCourse());
+            index.setIdParent(select.getIdindex());
+            index.setLevel(select.getLevel() + 1);
+            index.setColumn1("application/foder");
+            int idIndex = IndexDAO.addIndex(index);
+            resetTree();
+        }
+    }
+
+    public void resetTree() {
+        List<Index> list = IndexDAO.getIndexByIdShareCourse(shareCourse);
+        if (list != null) {
+            treeUtil.setListIndex(list);
+            root = treeUtil.createTreeNodeIndex();
+        }
+    }
+
+    public String addFile() throws IOException {
+        if (file != null) {
+            String fileType = file.getContentType();
+            FileUtil fileUtil = new FileUtil();
+            try {
+                uploadFileName = fileUtil.uploadFile(file);
+            } catch (IOException ex) {
+                Logger.getLogger(CourseDetailControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (uploadFileName != null) {
+                if (index != null && index.getName() != null && file != null) {
+                    Index select = (Index) selectNode.getData();
+                    //index.setTitle(index.getName());
+                    index.setName(uploadFileName.trim());
+                    index.setTitle(uploadFileName.trim());
+                    index.setContent("content");
+                    index.setCreateDate(format.format(new Date()));
+                    index.setIdShareCourse(shareCourse.getIdshareCourse());
+                    index.setIdParent(select.getIdindex());
+                    index.setLevel(select.getLevel() + 1);
+                    index.setColumn1("application/pdf");
+                    int idIndex = IndexDAO.addIndex(index);
+                    if (idIndex > 0) {
+                        Document f = new Document();
+                        f.setSrc(uploadFileName.trim());
+                        f.setSize(String.valueOf(file.getSize()));
+                        f.setTitleFile(uploadFileName.trim());
+                        f.setType(fileType);
+                        f.setCreateDate(format.format(new Date()));
+                        f.setIdIndex(idIndex);
+                        int idfile = FileDAO.addFile(f);
+                    }
+                }
+            }
+            file = null;
+            uploadFileName = null;
+            resetTree();
+        }
+        return "/admin/detailCourse.xhtml?courseId=6?faces-redirect=true";
+    }
+
+    public void addMemberInCourse() {
+        if (listIdAccountByAdminCreate != null && listIdAccountByAdminCreate.size() > 0) {
+            boolean result = ShareCourseDAO.insertMemberInCourse(listIdAccountByAdminCreate, account, courseCurrent);
+            if (result) {
+
+            }
+        }
+    }
+
+    public List<Account> getAccountAttenedNotShare(){
+        List<Account> list = null;
+        if(courseCurrent != null && account != null){
+            try {
+                list = AccountDAO.getListAccountAttendedCourseNotShared(account, courseCurrent);
+            } catch (SQLException ex) {
+                Logger.getLogger(CourseDetailControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return list;
+    }
+    
+    public void shareCourseToMember() {
+        if(listIdAccountAttendedNotShared != null && listIdAccountAttendedNotShared.size() > 0){
+            boolean b = ShareCourseDAO.shareCourseToMember(listIdAccountAttendedNotShared, account, courseCurrent);
+        }
+    }
+
+    public void viewFile() {
+        if (selectNode != null) {
+            Index indexData = (Index) selectNode.getData();
+            if (indexData != null && indexData.getColumn1().equals("application/pdf")) {
+                Document document = FileDAO.getDocumentByIdIndex(indexData.getIdindex());
+                if (document != null) {
+                    FileUtil fileUtil = new FileUtil();
+                    urlFile = fileUtil.getLinkFile(document.getSrc());
+                }
+
+            }
+        }
+    }
+    
+    public List<Account> getListAccountUserByAdminCreate(){
+        List<Account> list = null;
+        try {
+            list = AccountDAO.getListAccountUserByAdminCreate(account, courseCurrent);
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDetailControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+
+    public void demo() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage("abc", new FacesMessage("Successful", "Your message: " + "adsd"));
+    }
+
+    public List<String> resetListIdAccountAttendedNotShared(){
+        return new ArrayList<>();
+    }
+    
+    public List<Account> resetListAccountByAdminCreate() {
+        return new ArrayList<Account>();
+    }
+
+    public List<String> getListIdAccountByAdminCreate() {
+        if (listIdAccountByAdminCreate == null) {
+            listIdAccountByAdminCreate = new ArrayList<>();
+        }
+        return listIdAccountByAdminCreate;
+    }
+
+    public void setListIdAccountByAdminCreate(List<String> listIdAccountByAdminCreate) {
+        this.listIdAccountByAdminCreate = listIdAccountByAdminCreate;
+    }
+
+    public List<String> getListIdAccountAttendedNotShared() {
+        if(listIdAccountAttendedNotShared == null) listIdAccountAttendedNotShared = new ArrayList<>();
+        return listIdAccountAttendedNotShared;
+    }
+
+    public void setListIdAccountAttendedNotShared(List<String> listIdAccountAttendedNotShared) {
+        this.listIdAccountAttendedNotShared = listIdAccountAttendedNotShared;
+    }
+
+    public List<Account> getListAccountAttendedNotShared() {
+        if(listAccountAttendedNotShared == null) listAccountAttendedNotShared = new ArrayList<>();
+        return listAccountAttendedNotShared;
+    }
+
+    public void setListAccountAttendedNotShared(List<Account> listAccountAttendedNotShared) {
+        this.listAccountAttendedNotShared = listAccountAttendedNotShared;
+    }
+
+    public String getUploadFileName() {
+        return uploadFileName;
+    }
+
+    public void setUploadFileName(String uploadFileName) {
+        this.uploadFileName = uploadFileName;
+    }
+
+    public Course getCourseCurrent() {
+        return courseCurrent;
+    }
+
+    public void setCourseCurrent(Course courseCurrent) {
+        this.courseCurrent = courseCurrent;
+    }
+
+    public ShareCourse getShareCourse() {
+        return shareCourse;
+    }
+
+    public void setShareCourse(ShareCourse shareCourse) {
+        this.shareCourse = shareCourse;
+    }
+
+    public TreeNode getRoot() {
+        return root;
+    }
+
+    public void setRoot(TreeNode root) {
+        this.root = root;
+    }
+
+    public TreeNode getSelectNode() {
+        return selectNode;
+    }
+
+    public void setSelectNode(TreeNode selectNode) {
+        this.selectNode = selectNode;
+    }
+
+    public Part resetFile() {
+        file = null;
+        return file;
+    }
+
+    public Part getFile() {
+        return file;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
+    }
+
+    public boolean isDisplayChoseFile() {
+        return displayChoseFile;
+    }
+
+    public void setDisplayChoseFile(boolean displayChoseFile) {
+        this.displayChoseFile = displayChoseFile;
+    }
+
+    public Index resetIndex() {
+        return new Index();
+    }
+
+    public Index getIndex() {
+        if (index == null) {
+            index = new Index();
+        }
+        return index;
+    }
+
+    public void setIndex(Index index) {
+        this.index = index;
+    }
+
+    public String getUrlFile() {
+        return urlFile;
+    }
+
+    public void setUrlFile(String urlFile) {
+        this.urlFile = urlFile;
+    }
+
+    public List<Account> getListAccountManageByAdmin() {
+        if(listAccountManageByAdmin == null) listAccountManageByAdmin = new ArrayList<>();
+        return listAccountManageByAdmin;
+    }
+
+    public void setListAccountManageByAdmin(List<Account> listAccountManageByAdmin) {
+        this.listAccountManageByAdmin = listAccountManageByAdmin;
+    }
+
+}

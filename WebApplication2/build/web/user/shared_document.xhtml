@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "htth://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Shared Document</title>
+    </h:head>
+    <h:body style="margin: 0px">
+        <h:outputStylesheet library="css" name="theme_3.css"/>
+        <h:outputStylesheet library="css" name="style.css"/>
+
+        <h:form style="" id="sharedDocument">
+
+            <p:growl id="growl" showDetail="true" sticky="true" life="3000" /> 
+
+            <p:panel styleClass="HeaderDaCuoi">
+                <ui:include src="../template/header.xhtml" />
+            </p:panel>
+
+            <p:panel id="panel" styleClass="MenuDaCuoi">
+                <ui:include src="../template/menu_user.xhtml"/>
+            </p:panel>
+
+            <p:panel  styleClass="FooterDaCuoi">
+                <ui:include src="../template/footer.xhtml"/>
+            </p:panel>
+
+            <p:panel  styleClass="ContentDaCuoi">
+                
+                <div class="EmptyBox30"></div>
+                <p:outputPanel styleClass="">             
+                    <p:contextMenu for="cars">
+                        <p:menuitem value="View" >
+
+                        </p:menuitem>
+                        <p:menuitem value="Chia sẻ" oncomplete="PF('dialogShare').show()">
+
+                        </p:menuitem>
+                        <p:menuitem value="Delete" oncomplete="PF('dialogConfirm').show()">
+
+                        </p:menuitem>
+                    </p:contextMenu>
+
+                    <p:dataTable id="cars" var="car" value="#{demoController.list}" rowKey="#{car.name}"
+                                 selection="#{demoController.a}" selectionMode="single"
+                                 rows="14" paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10, 14, 20 "
+                                 paginatorPosition="bottom">
+                        <f:facet name="header">
+                            Danh sách tài liệu chia sẻ với bạn
+                        </f:facet>
+
+                        <p:column styleClass="Wid50" headerText="Tên tài liệu">
+                            <h:outputText value="#{car.name}" />
+                        </p:column>
+                        <p:column styleClass="Wid25" headerText="Người chia sẻ">
+                            <h:outputText value="#{car.name}" />
+                        </p:column>
+                        <p:column styleClass="Wid25" headerText="Thời gian tạo">
+                            <h:outputText value="#{car.name}" />
+                        </p:column>
+                    </p:dataTable> 
+                </p:outputPanel>
+            </p:panel>
+
+        </h:form>
+    </h:body>
+</html>

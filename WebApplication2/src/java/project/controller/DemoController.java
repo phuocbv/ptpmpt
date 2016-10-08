@@ -16,6 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -26,14 +27,28 @@ import org.hibernate.cfg.Configuration;
 public class DemoController {
     private String str;
     static SessionFactory factory;
+    private item a;
     List<item> list = new ArrayList<>();
-    
+    private UploadedFile file;
+     private List<String> cities;
+     
+   private String[] selectedCities;   
     public DemoController(){
-        for(int i= 0 ;i< 100; i++){
+        for(int i= 0 ; i< 100; i++){
             item it = new item();
             it.setName("So: " + i);
             list.add(it);
         }
+        cities = new ArrayList<String>();
+        cities.add("Miami");
+        cities.add("London");
+        cities.add("Paris");
+        cities.add("Istanbul");
+        cities.add("Berlin");
+        cities.add("Barcelona");
+        cities.add("Rome");
+        cities.add("Brasilia");
+        cities.add("Amsterdam");
     }
     
     public void abc(){
@@ -59,6 +74,32 @@ public class DemoController {
      
     }
 
+    public List<String> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<String> cities) {
+        this.cities = cities;
+    }
+
+    public String[] getSelectedCities() {
+        return selectedCities;
+    }
+
+    public void setSelectedCities(String[] selectedCities) {
+        this.selectedCities = selectedCities;
+    }
+    
+    
+ 
+    public UploadedFile getFile() {
+        return file;
+    }
+ 
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
     public List<item> getList() {
         return list;
     }
@@ -76,18 +117,14 @@ public class DemoController {
     public void setStr(String str) {
         this.str = str;
     }
-    
-    
-}
-class item{
-    private String name;
 
-    public String getName() {
-        return name;
+    public item getA() {
+        return a;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setA(item a) {
+        this.a = a;
     }
+    
     
 }

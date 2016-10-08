@@ -20,8 +20,7 @@ import java.util.logging.Logger;
 public class JDBC {
 
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/mydb";
-
+    static final String DB_URL = "jdbc:mysql://localhost:3306/mydb?characterEncoding=utf8";
     static final String USER = "root";
     static final String PASS = "";
 

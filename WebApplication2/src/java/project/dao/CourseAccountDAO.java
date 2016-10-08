@@ -8,7 +8,6 @@ package project.dao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import project.DO.CourseAccount;
 
 /**
  *
@@ -16,23 +15,23 @@ import project.DO.CourseAccount;
  */
 public class CourseAccountDAO {
 
-    public static int addCourseAccount(CourseAccount courseAccount) {
-        Integer result = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = null;
-        Integer courseID = null;
-        try {
-            tx = session.beginTransaction();
-            courseID = (Integer) session.save(courseAccount);
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return result;
-    }
+//    public static int addCourseAccount(CourseAccount courseAccount) {
+//        Integer result = null;
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        Transaction tx = null;
+//        Integer courseID = null;
+//        try {
+//            tx = session.beginTransaction();
+//            courseID = (Integer) session.save(courseAccount);
+//            tx.commit();
+//        } catch (HibernateException e) {
+//            if (tx != null) {
+//                tx.rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
+//        return result;
+//    }
 }

@@ -1,5 +1,5 @@
 package project.DO;
-// Generated Sep 11, 2016 4:47:28 AM by Hibernate Tools 4.3.1
+// Generated Sep 25, 2016 1:03:51 AM by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
@@ -19,43 +19,51 @@ import javax.persistence.Table;
 public class AccountInfo  implements java.io.Serializable {
 
 
-     private Integer id;
+     private Integer idaccountInfo;
      private String firstName;
      private String lastName;
      private String school;
+     private String mssv;
      private String class_;
      private String address;
-     private String accountInfocol;
-     private Integer idAccount;
+     private int idAccount;
+     private String column1;
+     private String column2;
+     private String column3;
 
     public AccountInfo() {
     }
 
 	
-    public AccountInfo(String firstName, String lastName) {
+    public AccountInfo(String firstName, String lastName, String school, int idAccount) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.school = school;
+        this.idAccount = idAccount;
     }
-    public AccountInfo(String firstName, String lastName, String school, String class_, String address, String accountInfocol, Integer idAccount) {
+    public AccountInfo(String firstName, String lastName, String school, String mssv, String class_, String address, int idAccount, String column1, String column2, String column3) {
        this.firstName = firstName;
        this.lastName = lastName;
        this.school = school;
+       this.mssv = mssv;
        this.class_ = class_;
        this.address = address;
-       this.accountInfocol = accountInfocol;
        this.idAccount = idAccount;
+       this.column1 = column1;
+       this.column2 = column2;
+       this.column3 = column3;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
 
     
-    @Column(name="id", unique=true, nullable=false)
-    public Integer getId() {
-        return this.id;
+    @Column(name="idaccount_info", unique=true, nullable=false)
+    public Integer getIdaccountInfo() {
+        return this.idaccountInfo;
     }
     
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdaccountInfo(Integer idaccountInfo) {
+        this.idaccountInfo = idaccountInfo;
     }
 
     
@@ -79,13 +87,23 @@ public class AccountInfo  implements java.io.Serializable {
     }
 
     
-    @Column(name="school", length=100)
+    @Column(name="school", nullable=false, length=100)
     public String getSchool() {
         return this.school;
     }
     
     public void setSchool(String school) {
         this.school = school;
+    }
+
+    
+    @Column(name="MSSV", length=100)
+    public String getMssv() {
+        return this.mssv;
+    }
+    
+    public void setMssv(String mssv) {
+        this.mssv = mssv;
     }
 
     
@@ -99,7 +117,7 @@ public class AccountInfo  implements java.io.Serializable {
     }
 
     
-    @Column(name="address", length=200)
+    @Column(name="address", length=100)
     public String getAddress() {
         return this.address;
     }
@@ -109,23 +127,43 @@ public class AccountInfo  implements java.io.Serializable {
     }
 
     
-    @Column(name="account_infocol", length=45)
-    public String getAccountInfocol() {
-        return this.accountInfocol;
-    }
-    
-    public void setAccountInfocol(String accountInfocol) {
-        this.accountInfocol = accountInfocol;
-    }
-
-    
-    @Column(name="id_account")
-    public Integer getIdAccount() {
+    @Column(name="id_account", nullable=false)
+    public int getIdAccount() {
         return this.idAccount;
     }
     
-    public void setIdAccount(Integer idAccount) {
+    public void setIdAccount(int idAccount) {
         this.idAccount = idAccount;
+    }
+
+    
+    @Column(name="column1", length=45)
+    public String getColumn1() {
+        return this.column1;
+    }
+    
+    public void setColumn1(String column1) {
+        this.column1 = column1;
+    }
+
+    
+    @Column(name="column2", length=45)
+    public String getColumn2() {
+        return this.column2;
+    }
+    
+    public void setColumn2(String column2) {
+        this.column2 = column2;
+    }
+
+    
+    @Column(name="column3", length=45)
+    public String getColumn3() {
+        return this.column3;
+    }
+    
+    public void setColumn3(String column3) {
+        this.column3 = column3;
     }
 
 

@@ -2,13 +2,13 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="mydb"/>
-  <table-filter match-name="lesson"/>
-  <table-filter match-name="manage"/>
-  <table-filter match-name="manage_info"/>
-  <table-filter match-name="account_info"/>
-  <table-filter match-name="file"/>
-  <table-filter match-name="course_account"/>
-  <table-filter match-name="comment"/>
   <table-filter match-name="course"/>
+  <table-filter match-name="comment_file"/>
+  <table-filter match-name="share_course"/>
+  <table-filter match-name="share_file"/>
+  <table-filter match-name="document"/>
+  <table-filter match-name="account_info"/>
   <table-filter match-name="account"/>
+  <table-filter match-name="comment_course"/>
+  <table-filter match-name="index"/>
 </hibernate-reverse-engineering>

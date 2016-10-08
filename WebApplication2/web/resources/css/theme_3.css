@@ -12,7 +12,6 @@
  * To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Lucida%20Grande,%20Lucida%20Sans,%20Arial,%20sans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=6px&bgColorHeader=deedf7&bgTextureHeader=03_highlight_soft.png&bgImgOpacityHeader=100&borderColorHeader=aed0ea&fcHeader=222222&iconColorHeader=72a7cf&bgColorContent=f2f5f7&bgTextureContent=04_highlight_hard.png&bgImgOpacityContent=100&borderColorContent=dddddd&fcContent=362b36&iconColorContent=72a7cf&bgColorDefault=d7ebf9&bgTextureDefault=02_glass.png&bgImgOpacityDefault=80&borderColorDefault=aed0ea&fcDefault=2779aa&iconColorDefault=3d80b3&bgColorHover=e4f1fb&bgTextureHover=02_glass.png&bgImgOpacityHover=100&borderColorHover=74b2e2&fcHover=0070a3&iconColorHover=2694e8&bgColorActive=3baae3&bgTextureActive=02_glass.png&bgImgOpacityActive=50&borderColorActive=2694e8&fcActive=ffffff&iconColorActive=ffffff&bgColorHighlight=ffef8f&bgTextureHighlight=03_highlight_soft.png&bgImgOpacityHighlight=25&borderColorHighlight=f9dd34&fcHighlight=363636&iconColorHighlight=2e83ff&bgColorError=cd0a0a&bgTextureError=01_flat.png&bgImgOpacityError=15&borderColorError=cd0a0a&fcError=ffffff&iconColorError=ffffff&bgColorOverlay=eeeeee&bgTextureOverlay=08_diagonals_thick.png&bgImgOpacityOverlay=90&opacityOverlay=80&bgColorShadow=000000&bgTextureShadow=04_highlight_hard.png&bgImgOpacityShadow=70&opacityShadow=30&thicknessShadow=7px&offsetTopShadow=-7px&offsetLeftShadow=-7px&cornerRadiusShadow=8px
  */
 
-
 /* Component containers
 ----------------------------------*/
 .ui-widget { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-size: 1em; }
@@ -20,7 +19,7 @@
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-size: 1em; }
 .ui-widget-content { border: 1px solid #dddddd; background: #f2f5f7; color: #333333; }
 .ui-widget-content a { color: #333333; }
-.ui-widget-header { border: 1px solid #eeeeee; background: #f5f5f5; color: #333333; font-weight: bold; }
+.ui-widget-header { border: 1px solid #eeeeee; background: #C7EAF7 /*#f5f5f5*/ ; color: #333333; font-weight: bold; }
 .ui-widget-header a { color: #333333; }
 
 /* Interaction states
@@ -909,8 +908,8 @@
 
 /** Panel **/
 .ui-panel.ui-widget {
-    margin-bottom: 20px;
-    background-color: #fff;
+    margin-bottom: 0px;
+    background-color: #f2f5f7;
     border: 1px solid transparent;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -927,13 +926,13 @@
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     color: #333;
-    background-color: #f5f5f5;
+    background-color: #fff;
     border-color: #ddd;
     border-radius: 0px;
 }
 
 .ui-panel .ui-panel-content.ui-widget-content {
-    padding: 15px;
+    padding: 5px;
 }
 
 /* Validation */
@@ -952,6 +951,11 @@ p-togglebutton.ng-dirty.ng-invalid .ui-button {
     border-bottom-color: #eed3d7;
 }
 
+.ui-widget-content.ui-datatable-odd.ui-datatable-selectable, .ui-widget-content.ui-datatable-even.ui-datatable-selectable{height: 40px}
+
+.ui-chkbox-box.ui-widget.ui-corner-all.ui-state-default.ui-state-active{background: #90CAE0}
+.ui-selectcheckboxmenu-trigger.ui-state-default.ui-corner-right{background:  #90CAE0}
+
 /*panelGrid none border*/
 .ui-panelgrid.ui-widget{ border: hidden;} 
 .ui-panelgrid .ui-panelgrid-cell{border: hidden !important;}
@@ -967,9 +971,17 @@ p-togglebutton.ng-dirty.ng-invalid .ui-button {
 }
 .ui-dialog-titlebar-icon.ui-dialog-titlebar-close.ui-corner-all{ background: #9ECBDC; margin-top: 4px;}
 
+/*text password*/
+.ui-inputfield.ui-password.ui-widget.ui-state-default.ui-corner-all{ background: #FFF; border: 1px solid #cccccc}
+
 
 /*datagrid*/
 .ui-datagrid-data .ui-datagrid-row .ui-datagrid-column{width: 33%;}
+
+/*data*/
+.ui-datascroller-header.ui-widget-header.ui-corner-top{}
+.ui-datascroller-content.ui-widget-content.ui-corner-bottom{ background: #FFF}
+
 
 .TexRight{text-align: right;}
 .TexLeft{text-align: left;}

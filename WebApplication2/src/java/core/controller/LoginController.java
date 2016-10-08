@@ -1,11 +1,12 @@
-
 package core.controller;
 
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import project.DO.Account;
+import project.config.CONFIG;
 import project.dao.AccountDAO;
 
 /**
@@ -15,12 +16,15 @@ import project.dao.AccountDAO;
 @ManagedBean(name = "loginController")
 @SessionScoped
 public class LoginController {
-    private static final String REDIRECT_TO_HOME = "/ptpmpt/home.xhtml?faces-redirect=true";
+    private static final String REDIRECT_TO_HOME_ADMIN = "/admin/home.xhtml?faces-redirect=true";
+    private static final String REDIRECT_TO_HOME_USER = "/user/home.xhtml?faces-redirect=true";
     private static final String REDIRECT_TO_LOGIN = "/login.xhtml?faces-redirect=true";
     private static final String TO_LOGIN = "/login.xhtml";
     
     private Account account;
     private boolean loggedIn;
+    private boolean logInIsAdmin = false;
+    private boolean logInIsUser = false;
     FacesContext context;
     public LoginController(){
         account = new Account();
@@ -42,9 +46,15 @@ public class LoginController {
             }
             loggedIn = true;
             FacesContext context = FacesContext.getCurrentInstance();
-            context.getExternalContext().getSessionMap().put("account", result);
+            context.getExternalContext().getSessionMap().put(CONFIG.SESSION_NAME_OF_ADMIN, result);
             //context.addMessage(null, new FacesMessage("Error", "Đăng nhập thành công"));
-            return REDIRECT_TO_HOME;
+            if( result.getColumn1().equals("admin")){
+                logInIsAdmin = true;
+            }else{
+                logInIsUser = true;
+            }
+            String link = result.getColumn1().equals("admin") ? REDIRECT_TO_HOME_ADMIN : REDIRECT_TO_HOME_USER;
+            return link;
         }
         loggedIn = false;
         context.addMessage(null, new FacesMessage("Error", "Đăng nhập không thành công"));
@@ -53,7 +63,7 @@ public class LoginController {
     
     public String doLogout(){
         FacesContext context = FacesContext.getCurrentInstance();
-        context.getExternalContext().getSessionMap().remove("account");
+        context.getExternalContext().getSessionMap().clear(); //remove(CONFIG.SESSION_NAME_OF_ADMIN);
         loggedIn = false;
         return REDIRECT_TO_LOGIN;
     }
@@ -73,4 +83,22 @@ public class LoginController {
     public void setAccount(Account account) {
         this.account = account;
     }
+
+    public boolean isLogInIsAdmin() {
+        return logInIsAdmin;
+    }
+
+    public void setLogInIsAdmin(boolean logInIsAdmin) {
+        this.logInIsAdmin = logInIsAdmin;
+    }
+
+    public boolean isLogInIsUser() {
+        return logInIsUser;
+    }
+
+    public void setLogInIsUser(boolean logInIsUser) {
+        this.logInIsUser = logInIsUser;
+    }
+    
+    
 }

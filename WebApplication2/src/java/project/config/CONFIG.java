@@ -12,4 +12,8 @@ package project.config;
 public class CONFIG {
     public static final String SESSION_NAME_OF_ADMIN = "account";
     public static final String SESSION_NAME_OF_USER = "account";
+    
+    public static final String CONFIG_CLONED = "yes";
+    public static final String CONFIG_NOT_CLONE = "no";
+    
 }

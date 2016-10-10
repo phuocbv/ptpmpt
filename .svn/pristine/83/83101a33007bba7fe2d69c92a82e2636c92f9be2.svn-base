@@ -1,0 +1,54 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package project.controllerAdmin;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import project.DO.Account;
+import project.dao.AccountDAO;
+
+/**
+ *
+ * @author DA CUOI
+ */
+@ManagedBean(name = "accountControllerAdmin")
+@ViewScoped
+public class AccountControllerAdmin {
+
+    private Account account;
+    private List<Account> listAccountManageByAdmin;
+    
+    public AccountControllerAdmin() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        account = (Account) context.getExternalContext().getSessionMap().get("account");
+    }
+    
+    public List<Account> getListAccountUserByAdminCreate(){
+        List<Account> list = null;
+        try {
+            list = AccountDAO.getListAccountUserByAdminCreate(account);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public List<Account> getListAccountManageByAdmin() {
+        if(listAccountManageByAdmin == null) listAccountManageByAdmin = new ArrayList<Account>();
+        return listAccountManageByAdmin;
+    }
+
+    public void setListAccountManageByAdmin(List<Account> listAccountManageByAdmin) {
+        this.listAccountManageByAdmin = listAccountManageByAdmin;
+    }
+   
+}

@@ -14,7 +14,7 @@ import org.hibernate.Transaction;
 import project.DO.Account;
 import project.DO.Course;
 import project.DO.ShareCourse;
-import project.config.SQL;
+import project.config.*;
 
 /**
  *
@@ -42,12 +42,13 @@ public class ShareCourseDAO {
     }
 
     /**
-     * admin
+     * admin and user
+     *
      * @param idaccount
      * @param idcourse
      * @return
      */
-    //lay share course theo id course và id account admin
+    //lay share course theo id course và id account admin create course
     public static ShareCourse getShareCouseByIdAccountAndIdCourseAdmin(int idaccount, int idcourse) {
         ShareCourse result = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -95,7 +96,7 @@ public class ShareCourseDAO {
                 shareCourse.setIdCourse(course.getIdcourse());
                 shareCourse.setIdAccountShare(0);
                 shareCourse.setIdAccountCreate(accountCreate.getIdaccount());
-                shareCourse.setCloned("no");
+                shareCourse.setCloned(CONFIG.CONFIG_NOT_CLONE);
                 session.save(shareCourse);
             }
             tx.commit();
@@ -145,7 +146,7 @@ public class ShareCourseDAO {
     }
 
 //fun user
-    
+    //tim share_couese theo id nguoi dung hien tai va id khoa hoc
     public static ShareCourse getShareCourseByIdAccountAndIdCourse(int idAccountCurrent, int idCourseCurrent) {
         ShareCourse result = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -171,11 +172,10 @@ public class ShareCourseDAO {
         }
         return result;
     }
-    
+
 //fun user
-    
     //lay danh sach thanh vien trong khoa hoc nhung chua duoc chia se khoa hoc 
-    public static List<ShareCourse> getListMemberNotShareCourse(ShareCourse shareCourse){
+    public static List<ShareCourse> getListMemberNotShareCourse(ShareCourse shareCourse) {
         List<ShareCourse> list = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
@@ -197,13 +197,60 @@ public class ShareCourseDAO {
         }
         return list;
     }
-    
+
     //user
     //tim sharecourse dua vao id nguoi dung va id khoa hoc 
     //vi khong bao gio co 1 mguoi ma co 2 lan tham gia cung 1 khoa hoc
-    public static ShareCourse getShareCourseByIdAccountUserAndIdCourse(Account account, Course course){
+    public static ShareCourse getShareCourseByIdAccountUserAndIdCourse(Account accountUser, Course courseCurrent) {
         ShareCourse shareCourse = null;
-        
+        List<ShareCourse> list = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createQuery("FROM ShareCourse WHERE id_course = :id_course "
+                    + " AND id_account_use = :id_account_use ");
+            query.setParameter("id_course", courseCurrent.getIdcourse());
+            query.setParameter("id_account_use", accountUser.getIdaccount());
+            list = query.list();
+            if(list != null && list.size() > 0){
+                shareCourse = list.get(0);
+            }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
         return shareCourse;
+    }
+    
+    //user
+    //update trang thai da clone khoa hoc cua nguoi dung
+    public static boolean updateStatusClone(ShareCourse shareCourse){
+        boolean result = false;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            ShareCourse sc = (ShareCourse) 
+                    session.get(ShareCourse.class, shareCourse.getIdshareCourse());
+            sc.setCloned(CONFIG.CONFIG_CLONED);
+            session.update(sc);
+            tx.commit();
+            result = true;
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+            result = false;
+        } finally {
+            session.close();
+        }
+        return result;
     }
 }

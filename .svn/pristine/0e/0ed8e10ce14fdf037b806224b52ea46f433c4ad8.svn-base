@@ -1,0 +1,43 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package project.dao;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import project.DO.Index;
+
+/**
+ *
+ * @author DA CUOI
+ */
+public class IndexDAO {
+
+    public static int addIndex(Index index) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        int indexID = -1;
+        try {
+            tx = session.beginTransaction();
+            indexID = (Integer) session.save(index);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return indexID;
+    }
+    
+    public static Index getIndexById(int id){
+        Index index = null;
+        
+        return index;
+    }
+}

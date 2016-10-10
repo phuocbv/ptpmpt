@@ -19,7 +19,7 @@
                 <f:viewParam name="courseId" value="#{courseDetailController.courseId}" />
             </f:metadata>
 
-            <p:growl id="growl" showDetail="true" sticky="true" life="3000" /> 
+            <p:growl id="growl" showDetail="true" life="3000" autoUpdate="true"/> 
 
             <p:panel  styleClass="HeaderDaCuoi">
                 <ui:include src="../template/header.xhtml" />
@@ -41,13 +41,15 @@
 
                 <div class="EmptyBox5"></div>
 
-                <p:outputPanel styleClass="Wid100 TexRight">
-                    <p:commandButton value="Clone khóa học" disabled="#{courseDetailController.cloned}">
+                <p:outputPanel id="clone" styleClass="Wid100 TexRight">
+                    <p:commandButton id="btnClone" value="Clone khóa học" disabled="#{courseDetailController.cloned}"
+                                     update=" :form:clone , :form:tree " 
+                                     actionListener="#{courseDetailController.cloneCourse()}">
                         
                     </p:commandButton>
-                    <p:commandButton value="Chia sẻ khóa học" oncomplete="PF('dialogShare').show()">
+<!--                    <p:commandButton value="Chia sẻ khóa học" oncomplete="PF('dialogShare').show()">
 
-                    </p:commandButton>
+                    </p:commandButton>-->
                 </p:outputPanel>
 
                 <p:panelGrid styleClass="Wid100" >
@@ -62,11 +64,13 @@
 
                     <p:row>
                         <p:column styleClass="Wid30" >
-                            <p:tree id="tree" value="#{treeView.root1}" var="node" selectionMode="single" selection="#{treeView.selectedNode1}"
-                                    draggable="true" droppable="true" style="width: 100% !important; height: 600px; overflow: auto">
-                                <p:ajax event="dragdrop" listener="#{treeView.onDragDrop}" disabled="true" />
+                            <p:tree id="tree" value="#{courseDetailController.root}" var="node" 
+                                    selectionMode="single" selection="#{courseDetailController.selectedNode}"
+                                    draggable="#{courseDetailController.cloned}" droppable="#{courseDetailController.cloned}" 
+                                    style="width: 100% !important; height: 600px; overflow: auto">
+                                <p:ajax event="dragdrop" listener="#{treeView.onDragDrop}" disabled="#{courseDetailController.cloned}" />
                                 <p:treeNode>
-                                    <h:outputText value="#{node}" />
+                                    <h:outputText value="#{node.name}" />
                                 </p:treeNode>
                             </p:tree>
                             <p:contextMenu for="tree">

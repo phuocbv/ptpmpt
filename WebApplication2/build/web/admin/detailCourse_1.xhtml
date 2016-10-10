@@ -7,62 +7,38 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-
-    <h:head>
-        <f:facet name="first">
-            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-            <title>
-                Course Detail
-            </title>
-        </f:facet>
-        <h:outputStylesheet library="css" name="theme_3.css"  />
-        <h:outputStylesheet library="css" name="style.css"/>
+<h:head>
+        <title>Login</title>
     </h:head>
-    <h:body>
-        <h:form id="formGrowl">
-            <p:growl id="growlForm" showDetail="true" autoUpdate="true" for="abc"/>
-        </h:form>
+    <h:body style="margin: 0px">
+        <h:outputStylesheet library="css" name="theme_3.css"/>
+        <h:outputStylesheet library="css" name="style.css"/>
+        <h:form id="formLogin">
+            <p:growl id="growl" showDetail="true" sticky="true" life="3000" /> 
 
-        <p:layout fullPage="true">
-            <!--            header-->
-            <p:layoutUnit position="north" size="60" resizable="true" closable="true" collapsible="true">
-                <h:form>  
-                    <p:panelGrid styleClass="Wid100">
-                        <p:row>
-                            <p:column styleClass="Wid50">
+            <p:panel styleClass="HeaderDaCuoi">
 
-                            </p:column>
-                            <p:column styleClass="Wid50 TexRight">
-                                <p:outputLabel value="#{homeController.username}" style="margin-right: 10px"/>
-                                <p:commandButton  value="Logout" action="#{loginController.doLogout()}"/>
-                            </p:column>
-                        </p:row>
-                    </p:panelGrid>
-                </h:form> 
-            </p:layoutUnit>
-
-            <!--footer-->
-            <p:layoutUnit position="south" size="60" closable="true" collapsible="true">
-                <h:form>
-
-
-                </h:form> 
-            </p:layoutUnit>
-
-            <!--menu-->
-            <p:layoutUnit position="west" size="250" collapsible="true">
+            </p:panel>
+            <p:panel id="panel" styleClass="MenuDaCuoi">
                 <p:menu style="width: 95%">
                     <p:submenu label="Trang chủ">
                         <p:menuitem value="Khóa học hiện tại" url="/admin/home.xhtml" />
                         <p:menuitem value="Thành viên khóa học" url="http://forum.primefaces.org/" />
                         <p:menuitem value="Tài liệu của bạn" url="http://www.primefaces.org/documentation.html" />
-
                     </p:submenu>
                 </p:menu>
-            </p:layoutUnit>
+            </p:panel>
+
+            <p:panel  styleClass="FooterDaCuoi">
+
+            </p:panel>
+
+            <p:panel  styleClass="ContentDaCuoi">
+         
+         
 
             <!--content-->
-            <p:layoutUnit position="center">
+        
                 <f:metadata>
                     <f:viewParam name="courseId" value="#{courseDetailControllerAdmin.courseIdCurrent}" />
                 </f:metadata>

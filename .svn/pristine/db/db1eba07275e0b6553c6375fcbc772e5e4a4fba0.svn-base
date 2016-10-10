@@ -1,0 +1,153 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package project.controllerAdmin;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.model.TreeNode;
+import org.primefaces.model.UploadedFile;
+import project.DO.Account;
+import project.DO.Course;
+import project.DO.Index;
+import project.DO.ShareCourse;
+import project.dao.CourseDAO;
+import project.dao.IndexDAO;
+import project.dao.ShareCourseDAO;
+import project.util.Tree;
+
+/**
+ *
+ * @author DA CUOI
+ */
+@ManagedBean(name = "courseDetailControllerAdmin")
+@ViewScoped
+public class CourseDetailControllerAdmin {
+
+    public int courseIdCurrent;
+    private Account account;
+    private Course courseCurrent;
+    private ShareCourse shareCourse;
+    private TreeNode root;
+    private TreeNode selectNode;
+    private Tree treeUtil;
+    private UploadedFile file;
+    private boolean displayChoseFile;
+    private Index index;
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+    public CourseDetailControllerAdmin() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        account = (Account) context.getExternalContext().getSessionMap().get("account");
+        treeUtil = new Tree();
+    }
+
+    public int getCourseIdCurrent() {
+        return courseIdCurrent;
+    }
+
+    public void setCourseIdCurrent(int courseIdCurrent) {
+        this.courseIdCurrent = courseIdCurrent;
+        if (courseIdCurrent > 0) {
+            courseCurrent = CourseDAO.getCourseById(courseIdCurrent);
+            shareCourse = ShareCourseDAO.getShareCouseByIdAccountAndIdCourseAdmin(account.getIdaccount(), courseIdCurrent);
+            resetTree();
+        }
+    }
+
+    public void uploadFile() {
+
+    }
+
+    public void addIndex() {
+        if (index != null) {
+            Index select = (Index) selectNode.getData();
+            index.setTitle(index.getName());
+            index.setContent("content");
+            index.setCreateDate(format.format(new Date()));
+            index.setIdShareCourse(shareCourse.getIdshareCourse());
+            index.setIdParent(select.getIdindex());
+            index.setLevel(select.getLevel() + 1);
+            int idIndex = IndexDAO.addIndex(index);
+            resetTree();
+        }
+    }
+
+    public void resetTree() {
+        List<Index> list = IndexDAO.getIndexByIdShareCourse(shareCourse);
+        if (list != null) {
+            treeUtil.setListIndex(list);
+            root = treeUtil.createTreeNodeIndex();
+        }
+    }
+
+    public Course getCourseCurrent() {
+        return courseCurrent;
+    }
+
+    public void setCourseCurrent(Course courseCurrent) {
+        this.courseCurrent = courseCurrent;
+    }
+
+    public ShareCourse getShareCourse() {
+        return shareCourse;
+    }
+
+    public void setShareCourse(ShareCourse shareCourse) {
+        this.shareCourse = shareCourse;
+    }
+
+    public TreeNode getRoot() {
+        return root;
+    }
+
+    public void setRoot(TreeNode root) {
+        this.root = root;
+    }
+
+    public TreeNode getSelectNode() {
+        return selectNode;
+    }
+
+    public void setSelectNode(TreeNode selectNode) {
+        this.selectNode = selectNode;
+    }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public boolean isDisplayChoseFile() {
+        return displayChoseFile;
+    }
+
+    public void setDisplayChoseFile(boolean displayChoseFile) {
+        this.displayChoseFile = displayChoseFile;
+    }
+
+    public Index resetIndex() {
+        return new Index();
+    }
+
+    public Index getIndex() {
+        if (index == null) {
+            index = new Index();
+        }
+        return index;
+    }
+
+    public void setIndex(Index index) {
+        this.index = index;
+    }
+
+}

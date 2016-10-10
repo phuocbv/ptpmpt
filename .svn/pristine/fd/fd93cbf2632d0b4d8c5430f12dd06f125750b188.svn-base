@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Course Detail</title>
+    </h:head>
+    <h:body>
+        <h:outputStylesheet library="css" name="theme_3.css"/>
+        <h:outputStylesheet library="css" name="style.css"/>
+
+        <h:form id="form">
+            <f:metadata>
+                <f:viewParam name="courseId" value="#{courseDetailController.courseId}" />
+            </f:metadata>
+
+            <p:growl id="growl" showDetail="true" sticky="true" life="3000" /> 
+
+            <p:panel  styleClass="HeaderDaCuoi">
+                <ui:include src="../template/header.xhtml" />
+            </p:panel>
+
+            <p:panel styleClass="MenuDaCuoi">
+                <ui:include src="../template/menu_user.xhtml" />
+            </p:panel>
+
+            <p:panel styleClass="FooterDaCuoi">
+
+            </p:panel>
+
+            <p:panel  styleClass="ContentDaCuoi">
+
+                <p:outputPanel styleClass="Wid100 TexCenter">
+                    <p:outputLabel value="Thông tin chi tiết khóa học #{courseDetailController.courseId}"></p:outputLabel>
+                </p:outputPanel>
+
+                <div class="EmptyBox5"></div>
+
+                <p:outputPanel styleClass="Wid100 TexRight">
+                    <p:commandButton value="Clone khóa học" disabled="#{courseDetailController.cloned}">
+                        
+                    </p:commandButton>
+                    <p:commandButton value="Chia sẻ khóa học" oncomplete="PF('dialogShare').show()">
+
+                    </p:commandButton>
+                </p:outputPanel>
+
+                <p:panelGrid styleClass="Wid100" >
+                    <p:row>
+                        <p:column styleClass="Wid30 TexCenter">
+                            <p:outputLabel value="Cấu trúc khóa học"></p:outputLabel>
+                        </p:column>
+                        <p:column styleClass="Wid70 TexCenter">
+                            <p:outputLabel value="Nội dung bài học"></p:outputLabel>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column styleClass="Wid30" >
+                            <p:tree id="tree" value="#{treeView.root1}" var="node" selectionMode="single" selection="#{treeView.selectedNode1}"
+                                    draggable="true" droppable="true" style="width: 100% !important; height: 600px; overflow: auto">
+                                <p:ajax event="dragdrop" listener="#{treeView.onDragDrop}" disabled="true" />
+                                <p:treeNode>
+                                    <h:outputText value="#{node}" />
+                                </p:treeNode>
+                            </p:tree>
+                            <p:contextMenu for="tree">
+                                <p:menuitem value="Xem chi tiết"/>
+                                <p:menuitem value="Chia sẻ file"/>
+                            </p:contextMenu>
+                        </p:column>
+
+                        <p:column styleClass="Wid70">
+
+                            <p:tabView scrollable="500" style="height: 600px">
+                                <p:tab title="Bài giảng">
+
+                                    <h:outputText
+                                        value="The story begins as Don Vito Corleone..." />
+
+                                </p:tab>
+                                <p:tab title="Video">
+
+                                    <h:outputText value="Francis Ford Coppola's legendary..." />
+
+                                </p:tab>
+                                <p:tab title="Godfather Part III">
+
+                                    <h:outputText value="After a break of more than 15 years..." />
+
+                                </p:tab>
+                            </p:tabView>
+
+                        </p:column>
+                    </p:row>
+
+
+                </p:panelGrid>
+
+                <p:outputPanel styleClass="Wid100 TexRight">
+                    <p:commandButton value="Chia sẻ khóa học" onclick="PF('dialogShare').show()"></p:commandButton>
+                </p:outputPanel>
+            </p:panel>
+        </h:form>
+
+
+        <h:form id="formDialog">
+            <p:dialog id="dialogShare" widgetVar="dialogShare" resizable="false" width="500" header="Chia sẻ khóa học">
+                <p:outputPanel styleClass="Wid100" id="panelDialogShare">
+                    <p:panelGrid styleClass="Wid100">
+                        <p:row>
+                            <p:column styleClass="Wid40">
+                                <p:outputLabel value="Chọn người chia sẻ"></p:outputLabel>
+                            </p:column>
+                            <p:column styleClass="Wid60">
+                                <p:selectCheckboxMenu value="#{courseDetailController.listIdMemberNotShareCouse}" 
+                                                      label="Danh sách người chia sẻ"
+                                                      filter="true" filterMatchMode="startsWith" styleClass="Wid100" >
+                                    <f:selectItems itemLabel="#{item.accountName}" itemValue="#{item.idaccount}"
+                                                   value="#{courseDetailController.listMemberNotShareCourse}" var="item"/>
+                                </p:selectCheckboxMenu>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <p:outputPanel styleClass="Wid100 TexRight">
+                        <p:commandButton value="Chia sẻ">
+                            <p:resetInput target=":formDialog:panelDialogShare"/>
+                        </p:commandButton>
+                    </p:outputPanel>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>

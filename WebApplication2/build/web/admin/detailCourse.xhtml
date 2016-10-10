@@ -42,8 +42,7 @@
                         </p:commandButton>
                         <p:commandButton value="Thêm thành viên KH" oncomplete="PF('dialogAddMember').show()" 
                                          update=":formDialogAddMember:panelDialogAddMember">
-<!--                            <f:setPropertyActionListener value="#{accountControllerAdmin.listAccountUserByAdminCreate}"
-                                                         target="#{accountControllerAdmin.listAccountManageByAdmin}"/>-->
+
                             <f:setPropertyActionListener value="#{courseDetailControllerAdmin.listAccountUserByAdminCreate}"
                                                          target="#{courseDetailControllerAdmin.listAccountManageByAdmin}"/>
 

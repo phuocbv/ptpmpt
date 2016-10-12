@@ -105,8 +105,6 @@
                                     <p:menuitem value="Xem chi tiết" actionListener="#{courseDetailControllerAdmin.viewFile()}" update=":form:tab"/>
                                     <p:menuitem value="Chia sẻ file"/>
                                     <p:menuitem value="Tải xuống"/>
-
-
                                     <p:menuitem value="Xóa"/>
                                 </p:contextMenu>
                             </p:outputPanel>
@@ -147,7 +145,7 @@
                                 <p:outputLabel value="Thư mục gốc"></p:outputLabel>
                             </p:column>
                             <p:column>
-                                <p:outputLabel value="thu muc"/>                              
+                                <p:outputLabel value="#{courseDetailControllerAdmin.selectNode.data.name}"/>                              
                             </p:column>
                         </p:row>
                         <p:row>
@@ -186,7 +184,7 @@
                                 <p:outputLabel value="Thư mục gốc"></p:outputLabel>
                             </p:column>
                             <p:column styleClass="Wid60">
-                                <p:outputLabel value="thu muc"/>
+                                <p:outputLabel value="#{courseDetailControllerAdmin.selectNode.data.name}"/>
                             </p:column>
                         </p:row>
                         <p:row>

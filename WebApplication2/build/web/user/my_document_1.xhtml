@@ -34,18 +34,14 @@
 
                 <p:outputPanel styleClass="Wid100 TexRight">
                     <p:commandButton value="Thêm tài liệu mới" oncomplete="PF('dialog').show()"></p:commandButton>
-                    <!--                         <p:commandButton update=":form:carDetail" value="Thêm khóa học"
-                                                                     oncomplete="PF('dialog').show()" icon="ui-icon-search" styleClass="Right">
-                                                        <f:setPropertyActionListener value="#{homeController.resetCourse()}" target="#{homeController.course}" />
-                                                        <p:resetInput target="panelGirdInfoCourse" />
-                                                    </p:commandButton>-->
+               
                 </p:outputPanel>
 
                 <div class="EmptyBox5"></div>
                 <p:outputPanel styleClass="">
 
 
-                    <p:contextMenu for="cars">
+                    <p:contextMenu for="documents">
                         <p:menuitem value="View" >
 
                         </p:menuitem>
@@ -57,8 +53,8 @@
                         </p:menuitem>
                     </p:contextMenu>
 
-                    <p:dataTable id="cars" var="car" value="#{demoController.list}" rowKey="#{car.name}"
-                                 selection="#{demoController.a}" selectionMode="single"
+                    <p:dataTable id="documents" var="document" value="#{myDocumentController.listDocument}" rowKey="#{document.idfile}"
+                                 selection="#{myDocumentController.selectedDocument}" selectionMode="single"
                                  rows="14" paginator="true"
                                  paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="10, 14, 20 "
@@ -67,15 +63,18 @@
                             Danh sách tài liệu của bạn
                         </f:facet>
 
-                        <p:column styleClass="Wid50" headerText="Tên tài liệu">
-                            <h:outputText value="#{car.name}" />
+                        <p:column styleClass="Wid40" headerText="Tên tài liệu">
+                            <h:outputText value="#{document.titleFile}" />
 
                         </p:column>
-                        <p:column styleClass="Wid25" headerText="Chủ sở hữu">
-                            <h:outputText value="#{car.name}" />
+                        <p:column styleClass="Wid20" headerText="Kiểu tài liệu">
+                            <h:outputText value="#{document.type}" />
                         </p:column>
-                        <p:column styleClass="Wid25" headerText="Thời gian tạo">
-                            <h:outputText value="#{car.name}" />
+                        <p:column styleClass="Wid20" headerText="Kích thước">
+                            <h:outputText value="#{document.size}" />
+                        </p:column>
+                        <p:column styleClass="Wid20" headerText="Thời gian tạo">
+                            <h:outputText value="#{document.createDate}" />
                         </p:column>
                     </p:dataTable> 
                 </p:outputPanel>
@@ -100,7 +99,8 @@
                                 <p:outputLabel value="Chọn tài liệu"></p:outputLabel>
                             </p:column>
                             <p:column styleClass="Wid70">
-                                <p:fileUpload value="#{demoController.file}" mode="simple"/>
+                                <h:inputFile id="choseFile" value="#{myDocumentController.file}"  
+                                             required="true" requiredMessage="Chưa chọn file"/>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
@@ -120,7 +120,7 @@
                     <p:panelGrid>
                         <p:row>
                             <p:column styleClass="Wid40">
-                                <p:outputLabel value="#{demoController.a.name}"></p:outputLabel>
+                                <p:outputLabel value="#{myDocumentController.selectedDocument.titleFile}"></p:outputLabel>
                             </p:column>
                             <p:column styleClass="Wid60">
                                 <p:selectCheckboxMenu id="menu" value="#{demoController.selectedCities}" label="Danh sách người chia sẻ"
@@ -134,7 +134,7 @@
 
                 <f:facet name="footer">
                     <p:outputPanel styleClass="Wid100 TexRight">
-                        <p:commandButton value="Chia sẻ"></p:commandButton>
+                        <p:commandButton value="Chia sẻ" ></p:commandButton>
                     </p:outputPanel>
                 </f:facet>
             </p:dialog>

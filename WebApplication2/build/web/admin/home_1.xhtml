@@ -60,10 +60,7 @@
                             <p:graphicImage value="../#{course.image}"/> 
                             <p:link outcome="detailCourse_2" value="#{course.courseName}">
                                 <f:param name="courseId" value="#{course.idcourse}" />
-
                             </p:link>
-<!--                                <h:outputText value="#{course.courseName}" />-->
-
                             <p:outputLabel value="Ngày tạo #{course.createDate}"/>
                         </h:panelGrid>
                     </p:panel>
@@ -92,7 +89,9 @@
                                 </p:column>
                                 <p:column styleClass="Wid70">
                                     <p:inputText id="courseName" styleClass="Wid100" value="#{homeControllerAdmin.course.courseName}" required="true"
-                                                 requiredMessage="Chưa nhập tên khóa học"></p:inputText>
+                                                 requiredMessage="Chưa nhập tên khóa học">
+                                        <f:validator validatorId="project.validate.CourseValidate" />
+                                    </p:inputText>
                                 </p:column>
                             </p:row>
                             <p:row>

@@ -15,7 +15,7 @@
         <h:outputStylesheet library="css" name="style.css"/>
 
         <h:form style="" id="formMain">
-            <p:growl id="growl" showDetail="true" sticky="true" life="3000" autoUpdate="true"/> 
+            <p:growl id="growl" showDetail="true" life="3000" autoUpdate="true"/> 
 
             <!--            header-->
             <p:panel  styleClass="HeaderDaCuoi">
@@ -96,29 +96,61 @@
                                 <p:outputLabel value="Tên tài khoản"/>
                             </p:column>
                             <p:column styleClass="Wid60">
-                                <p:inputText styleClass="Wid100" required="true" requiredMessage="Chưa nhập tên tài khoản"
-                                             value="#{accountControllerAdmin.accountSelected.username}"/>
+                                <p:inputText id="username" styleClass="Wid100" 
+                                             required="true" requiredMessage="Chưa nhập tên tài khoản"
+                                             value="#{accountControllerAdmin.accountSelected.username}">
+                                    <f:validator validatorId="project.validate.AccountValidate"/>
+                                </p:inputText>
                             </p:column>
                         </p:row>
 
+                        <p:row>
+                            <p:column styleClass="Wid40">
+
+                            </p:column>
+                            <p:column styleClass="Wid60">
+                                <p:message for="username"/>
+                            </p:column>
+                        </p:row>
 
                         <p:row>
                             <p:column styleClass="Wid40">
                                 <p:outputLabel value="Mật khẩu"/>
                             </p:column>
                             <p:column styleClass="Wid60">
-                                <p:password styleClass="Wid100" required="true" requiredMessage="Chưa nhập mật khẩu"
+                                <p:password id="password" styleClass="Wid100" binding="#{passwordComponent}"
+                                            required="true" requiredMessage="Chưa nhập mật khẩu"
                                             value="#{accountControllerAdmin.accountSelected.password}"/>
+
                             </p:column>
                         </p:row>
+                        <p:row>
+                            <p:column styleClass="Wid40">
 
+                            </p:column>
+                            <p:column styleClass="Wid60">
+                                <p:message for="password"/>
+                            </p:column>
+                        </p:row>
                         <p:row>
                             <p:column styleClass="Wid40">
                                 <p:outputLabel value="Nhập lại mật khẩu"/>
                             </p:column>
                             <p:column styleClass="Wid60">
-                                <p:password styleClass="Wid100" required="true" requiredMessage="Chưa xác thực mật khẩu"
-                                            value="#{accountControllerAdmin.confirmPassword}"/>
+                                <p:password id="confirmPassword" styleClass="Wid100" 
+                                            required="true" requiredMessage="Chưa xác thực mật khẩu"
+                                            value="#{accountControllerAdmin.confirmPassword}">
+                                    <f:validator validatorId="project.validate.EqualsValidator"/>
+                                    <f:attribute name="otherValue" value="#{passwordComponent}" />
+                                </p:password>
+                            </p:column>                        
+                        </p:row>
+                        <p:row>
+                            <p:column styleClass="Wid40">
+
+                            </p:column>
+                            <p:column styleClass="Wid60">
+                                <p:message for="confirmPassword"/>
                             </p:column>
                         </p:row>
 
